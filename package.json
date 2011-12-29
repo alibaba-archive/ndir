@@ -1,0 +1,23 @@
+{
+  "name": "dir",
+  "version": "0.0.1",
+  "description": "The lost dir util tools.",
+  "keywords": ["dir", "mkdir", "walk", "file", "rm", "filesystem"],
+  "author": "fengmk2 <fengmk2@gmail.com> (http://github.com/fengmk2)",
+  "main": "./lib/dir.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fengmk2/dir.git"
+  },
+  "dependencies": {
+    
+  },
+  "devDependencies": {
+    "should": ">=0.4.2",
+    "mocha": ">=0.7.1"
+  },
+  "license": "MIT",
+  "engines": { 
+    "node": ">= 0.6.0 < 0.7.0" 
+  }
+}
