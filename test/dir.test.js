@@ -46,9 +46,10 @@ describe('dir', function() {
     });
   });
 
-  describe('#copy()', function() {
+  describe('#copyfile()', function() {
     var from = __dirname + '/dir.test.foo.txt';
     var to = __dirname + '/dir.test.bar.txt';
+    var toParentNotExists = '/tmp/' + new Date().getTime() + '/dir.test.bar.txt';
     before(function() {
       fs.unlinkSync(to);
     });
@@ -62,13 +63,24 @@ describe('dir', function() {
         done(err);
       });
     });
+    it('should copy toParentNotExists', function(done) {
+      dir.copyfile(from, toParentNotExists, function(exists, next) {
+        exists.should.be.false;
+        next(true);
+      }, function(err) {
+        should.not.exist(err);
+        fs.statSync(toParentNotExists).isFile().should.be.true;
+        fs.readFileSync(toParentNotExists).toString().should.equal(fs.readFileSync(from).toString());
+        done();
+      });
+    });
   });
 
   describe('#mkdir()', function() {
     var existsDir = '/tmp/dir.test.exists.dir';
     var notExistsDir = '/tmp/dir.test/not.exists.dir';
     before(function(done) {
-      fs.mkdirSync(existsDir);
+      !path.existsSync(existsDir) && fs.mkdirSync(existsDir);
       exec('rm -rf /tmp/dir.test', done);
     });
 

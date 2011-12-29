@@ -5,7 +5,7 @@
 var fs = require('fs');
 var path = require('path');
 var util = require('util');
-var dir = require('../lib/dir');
+var dir = require('../');
 var rl = require("readline").createInterface(process.stdin, process.stdout);
 
 if (process.argv.length < 4) {
