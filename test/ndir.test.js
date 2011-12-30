@@ -3,7 +3,7 @@
  */
 
 var dir = require('../');
-var should = require('should');
+var should = require('../node_modules/should');
 var path = require('path');
 var fs = require('fs');
 var exec = require('child_process').exec;
