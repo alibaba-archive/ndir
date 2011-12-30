@@ -57,15 +57,15 @@ describe('ndir', function() {
 
     it('should walk "' + root + '" no error', function(done) {
       dir.walk(root, check, done, function(err, p) {
-        should.not.exist(p);
         should.not.exist(err);
+        should.not.exist(p);
       });
     });
 
     it('should success when walk empty dir', function(done) {
       dir.walk('test/emptydir', check, done, function(err, p) {
-        should.not.exist(p);
         should.not.exist(err);
+        should.not.exist(p);
       });
     });
 
