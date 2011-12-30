@@ -8,9 +8,10 @@ var path = require('path');
 var fs = require('fs');
 var exec = require('child_process').exec;
 
+
 describe('ndir', function() {
   describe('#walk()', function() {
-    var root = path.dirname(__dirname) + '/';
+    var root = path.resolve('.');
 
     function check(dir, files) {
       fs.statSync(dir).isDirectory().should.be.true;
@@ -50,33 +51,33 @@ describe('ndir', function() {
       });
     });
 
-    it('should walk dir all in callback', function(done) {
+    it('should walk "' + root + '" in callback mode', function(done) {
       var walker = new dir.Walk(__dirname, check, done);
     });
 
-    it('walk(dir, ondir, onend, onerr) should worked', function(done) {
+    it('should walk "' + root + '" no error', function(done) {
       dir.walk(root, check, done, function(err, p) {
-        should.not.exists(p);
-        should.not.exists(err);
+        should.not.exist(p);
+        should.not.exist(err);
       });
     });
 
     it('should success when walk empty dir', function(done) {
-      dir.walk(__dirname + '/emptydir', check, done, function(err, p) {
-        should.not.exists(p);
-        should.not.exists(err);
+      dir.walk('test/emptydir', check, done, function(err, p) {
+        should.not.exist(p);
+        should.not.exist(err);
       });
     });
 
     it('should error when walk not exists dir', function(done) {
-      dir.walk(__dirname + '/not-exists-dir', check, done, function(err) {
+      dir.walk('test/not-exists-dir', check, done, function(err) {
         err.should.be.an.instanceof(Error);
         err.message.should.include('ENOENT, no such file or directory');
       });
     });
 
     it('should error when walk a file', function(done) {
-      dir.walk(__dirname + '/ndir.test.js', check, done, function(err) {
+      dir.walk('test/ndir.test.js', check, done, function(err) {
         err.should.be.an.instanceof(Error);
         err.message.should.include('ENOTDIR, not a directory');
       });
@@ -94,8 +95,8 @@ describe('ndir', function() {
   });
 
   describe('#copyfile()', function() {
-    var from = __dirname + '/dir.test.foo.txt';
-    var to = __dirname + '/dir.test.bar.txt';
+    var from = 'test/dir.test.foo.txt';
+    var to = 'test/dir.test.bar.txt';
     var toParentNotExists = '/tmp/' + new Date().getTime() + '/dir.test.bar.txt';
 
     before(function() {
