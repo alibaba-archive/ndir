@@ -7,7 +7,7 @@ var path = require('path');
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 var rl = require("readline").createInterface(process.stdin, process.stdout);
-var dir = require('../');
+var ndir = require('../');
 
 
 if (process.argv.length < 4) {
@@ -25,12 +25,13 @@ util.inherits(CopyDir, EventEmitter);
 CopyDir.prototype.start = function() {
   var self = this;
   self.emit('start');
-  var walker = dir.walk(fromdir);
+  var walker = ndir.walk(fromdir);
   walker.on('dir', function(dirpath, files) {
     var doNext = self.tasks.length === 0;
     self.tasks.push([dirpath, true]);
-    for (var k in files) {
-      self.tasks.push([k, files[k].isDirectory()]);
+    for (var i = 0, l = files.length; i < l; i++) {
+      var info = files[i];
+      self.tasks.push([info[0], info[1].isDirectory()]);
     }
     if (doNext) {
       process.nextTick(function() {
@@ -60,7 +61,7 @@ CopyDir.prototype.next = function() {
   t = path.join(todir, t);
   var isdir = task[1];
   if (isdir) {
-    dir.mkdir(t, function(err) {
+    ndir.mkdir(t, function(err) {
       self.next();
     });
     return;
@@ -74,7 +75,7 @@ CopyDir.prototype.next = function() {
 CopyDir.prototype._copyfile = function _copyfile(fromfile, tofile, callback) {
   var self = this;
   self.emit('startCopyfile', fromfile, tofile);
-  dir.copyfile(fromfile, tofile, function(err) {
+  ndir.copyfile(fromfile, tofile, function(err) {
     self.emit('endCopyfile', err, fromfile, tofile);
     if (!err) {
       self.copyfileCount++;

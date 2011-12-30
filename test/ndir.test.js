@@ -2,40 +2,43 @@
  * Module dependencies.
  */
 
-var dir = require('../lib/dir');
+var dir = require('../');
 var should = require('should');
 var path = require('path');
 var fs = require('fs');
 var exec = require('child_process').exec;
 
-describe('dir', function() {
+describe('ndir', function() {
   describe('#walk()', function() {
     var root = path.dirname(__dirname) + '/';
 
     function check(dir, files) {
       fs.statSync(dir).isDirectory().should.be.true;
-      files.should.be.a('object');
-      Object.keys(files).length.should.equal(fs.readdirSync(dir).length);
-      for (var k in files) {
-        k.should.be.a('string');
-        k.should.include(dir);
-        var stats = files[k];
+      files.should.be.an.instanceof(Array);
+      files.length.should.equal(fs.readdirSync(dir).length);
+      for (var i = 0, l = files.length; i < l; i++) {
+        var info = files[i];
+        info[0].should.be.a('string');
+        info[0].should.include(dir);
+        var stats = info[1];
         stats.should.be.an.instanceof(fs.Stats);
       }
     }
 
     // 2 links, 39 dirs, 134 files
-    var node_modulesDir = path.join(__dirname, '/../node_modules');
-    it('should walk dir ' + node_modulesDir, function(done) {
+    var node_modulesDir = './node_modules';
+    it('should walk dir ' + node_modulesDir, function end(done) {
       var walker = new dir.Walk(node_modulesDir);
       walker.on('dir', check);
       var dirCount = 1;
       var fileCount = 0;
       walker.on('dir', function(dirpath, files) {
-        for (var k in files) {
-          if (files[k].isDirectory()) {
+        for (var i = 0, l = files.length; i < l; i++) {
+          var info = files[i];
+          var stats = info[1];
+          if (stats.isDirectory()) {
             dirCount++;
-          } else if(!files[k].isSymbolicLink() && files[k].isFile()) {
+          } else if(!stats.isSymbolicLink() && stats.isFile()) {
             fileCount++;
           }
         }
@@ -73,7 +76,7 @@ describe('dir', function() {
     });
 
     it('should error when walk a file', function(done) {
-      dir.walk(__dirname + '/dir.test.js', check, done, function(err) {
+      dir.walk(__dirname + '/ndir.test.js', check, done, function(err) {
         err.should.be.an.instanceof(Error);
         err.message.should.include('ENOTDIR, not a directory');
       });
