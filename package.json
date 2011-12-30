@@ -9,6 +9,9 @@
     "type": "git",
     "url": "https://github.com/fengmk2/ndir.git"
   },
+  "scripts": {
+    "test": "make test"
+  },
   "dependencies": {
     
   },
