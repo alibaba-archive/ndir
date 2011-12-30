@@ -1,5 +1,7 @@
 # ndir
 
+[![Build Status](https://secure.travis-ci.org/fengmk2/ndir.png)](http://travis-ci.org/fengmk2/ndir)
+
 The lost dir util tools. Handle dir and file in Event.
 
 ## Install
