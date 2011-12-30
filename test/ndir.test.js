@@ -12,6 +12,18 @@ var exec = require('child_process').exec;
 describe('ndir', function() {
   describe('#walk()', function() {
     var root = path.resolve('.');
+    var emptydir = path.join(root, 'test/emptydir');
+
+    before(function() {
+      if (!path.existsSync(emptydir)) {
+        fs.mkdirSync(emptydir);
+      }
+    });
+    after(function() {
+      if (path.existsSync(emptydir)) {
+        fs.rmdirSync(emptydir);
+      }
+    });
 
     function check(dir, files) {
       fs.statSync(dir).isDirectory().should.be.true;
@@ -63,7 +75,7 @@ describe('ndir', function() {
     });
 
     it('should success when walk empty dir', function(done) {
-      dir.walk('test/emptydir', check, done, function(err, p) {
+      dir.walk(emptydir, check, done, function(err, p) {
         should.not.exist(err);
         should.not.exist(p);
       });
