@@ -1,8 +1,8 @@
 {
   "name": "ndir",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The lost dir util tools for Nodejs. Handle dir and file in Event",
-  "keywords": ["dir", "mkdir", "walk", "file", "rm", "filesystem", "event"],
+  "keywords": ["dir", "mkdir", "walk", "file", "rm", "filesystem", "event", "readfile", "linereader"],
   "author": "fengmk2 <fengmk2@gmail.com> (http://github.com/fengmk2)",
   "main": "./lib/ndir.js",
   "repository": {
@@ -21,6 +21,6 @@
   },
   "license": "MIT",
   "engines": { 
-    "node": ">= 0.6.0 < 0.7.0" 
+    "node": ">= 0.6.0" 
   }
 }

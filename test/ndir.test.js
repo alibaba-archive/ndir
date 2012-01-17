@@ -172,4 +172,22 @@ describe('ndir', function() {
     });
 
   });
+
+  describe('#createLineReader()', function() {
+    it('should read line by line', function(done) {
+      var lines = fs.readFileSync(__dirname + '/ndir.test.js', 'utf8').split('\n');
+      var index = 0;
+      dir.createLineReader(__dirname + '/ndir.test.js')
+      .on('line', function(line) {
+        line.should.be.an.instanceof(Buffer);
+        var s = line.toString();
+        s.should.equal(lines[index++]);
+        if (s) {
+          s[s.length - 1].should.not.equal('\n');
+        }
+      })
+      .on('end', done)
+      .on('error', done);
+    });
+  });
 });

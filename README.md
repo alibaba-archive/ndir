@@ -31,7 +31,7 @@ ndir.walk('./', function onDir(dirpath, files) {
   }
 }, function end() {
   console.log('walk end.');
-}, function error() {
+}, function error(err, errPath) {
   console.error('%s error: %s', errPath, err);
 });
 ```
