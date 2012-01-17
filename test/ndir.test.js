@@ -8,10 +8,9 @@ var path = require('path');
 var fs = require('fs');
 var exec = require('child_process').exec;
 
-
+var root = path.resolve('.');
 describe('ndir', function() {
   describe('#walk()', function() {
-    var root = path.resolve('.');
     var emptydir = path.join(root, 'test/emptydir');
 
     before(function() {
@@ -38,10 +37,9 @@ describe('ndir', function() {
       }
     }
 
-    // 2 links, 39 dirs, 134 files
-    var node_modulesDir = './node_modules';
-    it('should walk dir ' + node_modulesDir, function end(done) {
-      var walker = new dir.Walk(node_modulesDir);
+    var walkdir = path.join(root, 'test');
+    it('should walk dir ' + walkdir, function end(done) {
+      var walker = new dir.Walk(walkdir);
       walker.on('dir', check);
       var dirCount = 1;
       var fileCount = 0;
@@ -57,8 +55,8 @@ describe('ndir', function() {
         }
       });
       walker.on('end', function() {
-        dirCount.should.equal(39);
-        fileCount.should.equal(134);
+        dirCount.should.equal(3);
+        fileCount.should.equal(3);
         done();
       });
     });
