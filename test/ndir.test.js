@@ -55,7 +55,7 @@ describe('ndir', function() {
         }
       });
       walker.on('end', function() {
-        dirCount.should.equal(3);
+        dirCount.should.equal(2);
         fileCount.should.equal(3);
         done();
       });
