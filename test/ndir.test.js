@@ -56,7 +56,7 @@ describe('ndir', function() {
       });
       walker.on('end', function() {
         dirCount.should.equal(2);
-        fileCount.should.equal(3);
+        fileCount.should.equal(4);
         done();
       });
     });
@@ -173,9 +173,10 @@ describe('ndir', function() {
 
   describe('#createLineReader()', function() {
     it('should read line by line', function(done) {
-      var lines = fs.readFileSync(__dirname + '/ndir.test.js', 'utf8').split('\n');
+      var logfile = __dirname + '/access.log';
+      var lines = fs.readFileSync(logfile, 'utf8').split('\n');
       var index = 0;
-      dir.createLineReader(__dirname + '/ndir.test.js')
+      dir.createLineReader(logfile)
       .on('line', function(line) {
         line.should.be.an.instanceof(Buffer);
         var s = line.toString();
