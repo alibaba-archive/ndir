@@ -83,25 +83,52 @@ ndir.mkdir(dirname, function(err) {
 });
 ```
 
+## Read a file line by line
+
+If you want to read a file line by line, `ndir.LineReader` will help you easy way to do that.
+
+```
+var ndir = require('ndir');
+var assert = require('assert');
+
+var lineNumber = 0;
+ndir.createLineReader('./test/access.log').on('line', function(line) {
+  assert.ok(Buffer.isBuffer(line));
+  console.log('%d: %s', ++lineNumber, line.toString());
+}).on('end', function() {
+  console.log('read a file done.')
+}).on('error', function(err) {
+  console.log('error: ', err.message)
+});
+```
+
 ## Viewing Examples
 
 First install the dev dependencies to install all the example / test suite deps:
 
-    $ npm install -d
+```
+$ npm install -d
+```
 
 then run whichever tests you want:
 
-    $ node example/listdir.js example
+```
+$ node example/listdir.js example
+```
 
 ## Running Tests
 
 To run the test suite first invoke the following command within the repo, installing the development dependencies:
 
-    $ npm install
+```
+$ npm install
+```
 
 then run the tests:
 
-    $ make test
+```
+$ make test
+```
 
 ## License 
 
