@@ -5,7 +5,7 @@
   "keywords": ["dir", "mkdir", "walk", "file", "rm", "filesystem", "event", "readfile", "linereader"],
   "author": "fengmk2 <fengmk2@gmail.com> (http://github.com/fengmk2)",
   "homepage": "http://github.com/fengmk2/ndir",
-  "main": "./lib/ndir.js",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/fengmk2/ndir.git"
@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "should": ">=0.4.2",
-    "mocha": ">=0.7.1"
+    "mocha": ">=0.13.0"
   },
   "license": "MIT",
   "engines": { 
