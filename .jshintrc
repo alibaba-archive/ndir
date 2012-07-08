@@ -8,9 +8,11 @@
     "it",
     "describe",
     "before",
-    "after"
+    "after",
+    "$await"
   ],
 
+  "evil": false,
   "node" : true,
   "es5": true,
   "bitwise": true,

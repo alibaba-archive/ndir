@@ -2,25 +2,36 @@
  * Module dependencies.
  */
 
+var Jscex = require('../lib/jscexify');
 var dir = require('../');
 var should = require('../node_modules/should');
 var path = require('path');
 var fs = require('fs');
 var exec = require('child_process').exec;
-var existsSync = fs.existsSync || path.existsSync;
+fs.existsSync = fs.existsSync || path.existsSync;
 var root = path.resolve('.');
+
+var mockTaskFailure = function (error) {
+  return function () {
+    return Jscex.Async.Task.create(function (t) {
+      process.nextTick(function () {
+        t.complete("failure", new Error(error));
+      });
+    });
+  }
+}
 
 describe('ndir', function () {
   describe('#walk()', function () {
     var emptydir = path.join(root, 'test/emptydir');
 
     before(function () {
-      if (!existsSync(emptydir)) {
+      if (!fs.existsSync(emptydir)) {
         fs.mkdirSync(emptydir, '0777');
       }
     });
     after(function () {
-      if (existsSync(emptydir)) {
+      if (fs.existsSync(emptydir)) {
         fs.rmdirSync(emptydir);
       }
     });
@@ -94,7 +105,7 @@ describe('ndir', function () {
       });
     });
 
-    if (existsSync('/.fseventsd')) {
+    if (fs.existsSync('/.fseventsd')) {
       it('should error when walk noPermission dir', function (done) {
         dir.walk('/.fseventsd', check, done, function (err) {
           err.should.be.an.instanceof(Error);
@@ -111,7 +122,7 @@ describe('ndir', function () {
     var toParentNotExists = '/tmp/' + new Date().getTime() + '/dir.test.bar.txt';
 
     before(function () {
-      existsSync(to) && fs.unlinkSync(to);
+      fs.existsSync(to) && fs.unlinkSync(to);
     });
 
     it('should worked', function (done) {
@@ -146,7 +157,7 @@ describe('ndir', function () {
     var notExistsDir = '/tmp/dir.test/not.exists.dir';
 
     before(function (done) {
-      !existsSync(existsDir) && fs.mkdirSync(existsDir, '0777');
+      !fs.existsSync(existsDir) && fs.mkdirSync(existsDir, '0777');
       exec('rm -rf /tmp/dir.test', done);
     });
 
@@ -155,18 +166,36 @@ describe('ndir', function () {
     });
 
     it('should make exists dir success', function (done) {
-      existsSync(existsDir).should.be.true;
+      fs.existsSync(existsDir).should.be.true;
       dir.mkdir(existsDir, function (err) {
-        existsSync(existsDir).should.be.true;
+        fs.existsSync(existsDir).should.be.true;
         done(err);
       });
     });
 
     it('should make not exists dir success', function (done) {
-      existsSync(notExistsDir).should.be.false;
+      fs.existsSync(notExistsDir).should.be.false;
       dir.mkdir(notExistsDir, function (err) {
-        existsSync(notExistsDir).should.be.true;
+        fs.existsSync(notExistsDir).should.be.true;
         done(err);
+      });
+    });
+
+    describe('mock fs.mkdirAsync() error', function () {
+      var _mkdirAsync = fs.mkdirAsync;
+      before(function () {
+        fs.mkdirAsync = mockTaskFailure('mock fs.mkdirAsync() error');
+      });
+      after(function () {
+        fs.mkdirAsync = _mkdirAsync;
+      });
+
+      it('should return mock fs.mkdirAsync() error', function (done) {
+        dir.mkdir('/tmp/aaa/notexits/' + Date.now(), function (err) {
+          should.exist(err);
+          err.should.have.property('message', 'mock fs.mkdirAsync() error');
+          done();
+        });
       });
     });
 

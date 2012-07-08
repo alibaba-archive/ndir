@@ -1,6 +1,6 @@
 {
   "name": "ndir",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "The lost dir util tools for Nodejs. Handle dir and file in Event",
   "keywords": ["dir", "mkdir", "walk", "file", "rm", "filesystem", "event", "readfile", "linereader"],
   "author": "fengmk2 <fengmk2@gmail.com> (http://github.com/fengmk2)",
@@ -14,11 +14,15 @@
     "test": "make test"
   },
   "dependencies": {
-    
+    "jscex": ">=0.6.5",
+    "jscex-jit": ">=0.6.5",
+    "jscex-async": ">=0.6.5",
+    "jscex-async-powerpack": ">=0.6.5"
   },
   "devDependencies": {
-    "should": ">=0.4.2",
-    "mocha": ">=0.13.0"
+    "should": "*",
+    "mocha": "*",
+    "jscexc": "*"
   },
   "license": "MIT",
   "engines": { 
