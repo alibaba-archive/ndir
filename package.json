@@ -17,7 +17,8 @@
     "jscex": ">=0.6.5",
     "jscex-jit": ">=0.6.5",
     "jscex-async": ">=0.6.5",
-    "jscex-async-powerpack": ">=0.6.5"
+    "jscex-async-powerpack": ">=0.6.5",
+    "jscexify": ">=0.0.1"
   },
   "devDependencies": {
     "should": "*",
@@ -26,6 +27,6 @@
   },
   "license": "MIT",
   "engines": { 
-    "node": ">= 0.4" 
+    "node": ">= 0.6" 
   }
 }

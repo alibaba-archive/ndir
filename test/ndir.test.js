@@ -2,7 +2,6 @@
  * Module dependencies.
  */
 
-var Jscex = require('../lib/jscexify');
 var dir = require('../');
 var should = require('../node_modules/should');
 var path = require('path');
@@ -10,6 +9,7 @@ var fs = require('fs');
 var exec = require('child_process').exec;
 fs.existsSync = fs.existsSync || path.existsSync;
 var root = path.resolve('.');
+var Jscex = require('jscex');
 
 var mockTaskFailure = function (error) {
   return function () {
