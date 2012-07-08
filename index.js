@@ -12,8 +12,9 @@
 
 var fs = require('fs');
 var path = require('path');
-var libpath = path.join(__dirname, process.env.NDIR_COV ? 'lib-cov' : 'lib');
+fs.existsSync = fs.existsSync || path.existsSync;
 
+var libpath = path.join(__dirname, process.env.NDIR_COV ? 'lib-cov' : 'lib');
 var modulepath = path.join(libpath, 'ndir_.js');
 if (!fs.existsSync(modulepath)) {
   modulepath = path.join(libpath, 'ndir.js');
