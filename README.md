@@ -6,13 +6,13 @@ The lost dir util tools. Handle dir and file in Event.
 
 ## Install
 
-```
+```bash
 $ npm install ndir
 ```
 
 require `ndir`
 
-```
+```bash
 var ndir = require('ndir');
 ```
 
@@ -20,7 +20,7 @@ var ndir = require('ndir');
 
 callback mode:
 
-```
+```js
 ndir.walk('./', function onDir(dirpath, files) {
   console.log(' * %s', dirpath);
   for (var i = 0, l = files.length; i < l; i++) {
@@ -38,7 +38,7 @@ ndir.walk('./', function onDir(dirpath, files) {
 
 event mode:
 
-```
+```js
 var walker = ndir.walk('./');
 walker.on('dir', function(dirpath, files) {
   console.log(' * %s', dirpath);
@@ -61,7 +61,7 @@ walker.on('end', function() {
 
 Copy file, auto create target file parent dir if it not exists.
 
-```
+```js
 ndir.copyfile(fromfile, tofile, function(err) {
   if (err) {
     throw err;
@@ -74,7 +74,7 @@ ndir.copyfile(fromfile, tofile, function(err) {
 
 Make dir, equal `$ mkdir -p dirname` .
 
-```
+```js
 ndir.mkdir(dirname, function(err) {
   if (err) {
     throw err;
@@ -87,7 +87,7 @@ ndir.mkdir(dirname, function(err) {
 
 If you want to read a file line by line, `ndir.LineReader` will help you easy way to do that.
 
-```
+```js
 var ndir = require('ndir');
 var assert = require('assert');
 
@@ -106,13 +106,13 @@ ndir.createLineReader('./test/access.log').on('line', function(line) {
 
 First install the dev dependencies to install all the example / test suite deps:
 
-```
+```bash
 $ npm install -d
 ```
 
 then run whichever tests you want:
 
-```
+```bash
 $ node example/listdir.js example
 ```
 
@@ -120,13 +120,13 @@ $ node example/listdir.js example
 
 To run the test suite first invoke the following command within the repo, installing the development dependencies:
 
-```
+```bash
 $ npm install
 ```
 
 then run the tests:
 
-```
+```bash
 $ make test
 ```
 
