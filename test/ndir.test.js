@@ -7,20 +7,20 @@ var should = require('../node_modules/should');
 var path = require('path');
 var fs = require('fs');
 var exec = require('child_process').exec;
-var existsSync = fs.existsSync || path.existsSync;
+fs.existsSync = fs.existsSync || path.existsSync;
 var root = path.resolve('.');
 
 describe('ndir', function () {
-  describe('#walk()', function () {
+  describe('walk()', function () {
     var emptydir = path.join(root, 'test/emptydir');
 
     before(function () {
-      if (!existsSync(emptydir)) {
+      if (!fs.existsSync(emptydir)) {
         fs.mkdirSync(emptydir, '0777');
       }
     });
     after(function () {
-      if (existsSync(emptydir)) {
+      if (fs.existsSync(emptydir)) {
         fs.rmdirSync(emptydir);
       }
     });
@@ -94,7 +94,7 @@ describe('ndir', function () {
       });
     });
 
-    if (existsSync('/.fseventsd')) {
+    if (fs.existsSync('/.fseventsd')) {
       it('should error when walk noPermission dir', function (done) {
         dir.walk('/.fseventsd', check, done, function (err) {
           err.should.be.an.instanceof(Error);
@@ -105,13 +105,13 @@ describe('ndir', function () {
     
   });
 
-  describe('#copyfile()', function () {
+  describe('copyfile()', function () {
     var from = 'test/dir.test.foo.txt';
     var to = 'test/dir.test.bar.txt';
     var toParentNotExists = '/tmp/' + new Date().getTime() + '/dir.test.bar.txt';
 
     before(function () {
-      existsSync(to) && fs.unlinkSync(to);
+      fs.existsSync(to) && fs.unlinkSync(to);
     });
 
     it('should worked', function (done) {
@@ -141,12 +141,12 @@ describe('ndir', function () {
 
   });
 
-  describe('#mkdir()', function () {
+  describe('mkdir()', function () {
     var existsDir = '/tmp/dir.test.exists.dir';
-    var notExistsDir = '/tmp/dir.test/not.exists.dir';
+    var notExistsDir = '/tmp/dir.test/not.exists.dir/haha/1/2/3/4/2/3/1/2/3';
 
     before(function (done) {
-      !existsSync(existsDir) && fs.mkdirSync(existsDir, '0777');
+      !fs.existsSync(existsDir) && fs.mkdirSync(existsDir, '0777');
       exec('rm -rf /tmp/dir.test', done);
     });
 
@@ -155,24 +155,24 @@ describe('ndir', function () {
     });
 
     it('should make exists dir success', function (done) {
-      existsSync(existsDir).should.be.true;
+      fs.existsSync(existsDir).should.be.true;
       dir.mkdir(existsDir, function (err) {
-        existsSync(existsDir).should.be.true;
+        fs.existsSync(existsDir).should.be.true;
         done(err);
       });
     });
 
     it('should make not exists dir success', function (done) {
-      existsSync(notExistsDir).should.be.false;
+      fs.existsSync(notExistsDir).should.be.false;
       dir.mkdir(notExistsDir, function (err) {
-        existsSync(notExistsDir).should.be.true;
+        fs.existsSync(notExistsDir).should.be.true;
         done(err);
       });
     });
 
   });
 
-  describe('#createLineReader()', function () {
+  describe('createLineReader()', function () {
     it('should read line by line', function (done) {
       var logfile = __dirname + '/access.log';
       var lines = fs.readFileSync(logfile, 'utf8').split('\n');
