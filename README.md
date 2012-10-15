@@ -1,8 +1,10 @@
-# ndir
+# ndir [![Build Status](https://secure.travis-ci.org/fengmk2/ndir.png)](http://travis-ci.org/fengmk2/ndir)
 
-[![Build Status](https://secure.travis-ci.org/fengmk2/ndir.png)](http://travis-ci.org/fengmk2/ndir)
+![logo](https://raw.github.com/fengmk2/ndir/master/logo.png)
 
 The lost dir util tools. Handle dir and file in Event.
+
+jscoverage: [93%](http://fengmk2.github.com/coverage/ndir.html)
 
 ## Install
 
