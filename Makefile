@@ -9,7 +9,7 @@ test:
 
 test-cov:
 	@rm -rf lib-cov
-	@jscoverage lib lib-cov
+	@./node_modules/.bin/jscover lib lib-cov
 	@NDIR_COV=1 $(MAKE) test REPORTER=dot
 	@NDIR_COV=1 $(MAKE) test REPORTER=html-cov > coverage.html
 
