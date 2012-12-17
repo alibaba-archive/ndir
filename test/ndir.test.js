@@ -193,9 +193,11 @@ describe('ndir', function () {
 
   describe('createBigFileWalker', function () {
     var walker;
-    var total = 0;
     it('should emit inited', function (done) {
-      walker = dir.createBigFileWalker(logfile, 100);
+      walker = dir.createBigFileWalker(logfile, {
+        offset: 10,
+        pieceLength: 100
+      });
       walker.pause.should.be.not.ok;
       walker.inited.should.be.not.ok;
       walker.once('inited', function () {
@@ -215,12 +217,11 @@ describe('ndir', function () {
     it('should walk 10 ok', function () {
       var result = walker.get(10);
       for (var i = 0; i < 10; i++) {
-        result[i].toString().should.equal(lines[i]);
+        result[i].toString().should.equal(lines[i + 10]);
       }
       walker.index.should.equal(10);
       walker.curr.should.have.length(100);
       walker.back.should.have.length(100);
-      total += 10;
     });
 
     it('should walk left ok', function () {
@@ -228,13 +229,12 @@ describe('ndir', function () {
       var left = walker.curr.length - walker.index;
       var result = walker.get(left);
       for (var i = 0; i < left; i++) {
-        result[i].toString().should.equal(lines[i + 10]);
+        result[i].toString().should.equal(lines[i + 20]);
       }
       walker.curr.length.should.equal(100);
       walker.pause.should.be.not.ok;
       walker.back.should.equal(remain);
       walker.remain.length.should.equal(0);
-      total += left;
     });
 
     it('should walker more ok', function (done) {
@@ -248,9 +248,8 @@ describe('ndir', function () {
         walker.curr.should.equal(back);
         walker.back.should.equal(remain);
         for (var i = 0; i < result.length; i++) {
-          result[i].toString().should.equal(lines[i + 100]);
+          result[i].toString().should.equal(lines[i + 110]);
         }
-        total += result.length;
         done();
       }, 100);
     });
@@ -259,8 +258,7 @@ describe('ndir', function () {
       //wait load
       setTimeout(function () {
         var result = walker.get(150);
-        total += result.length;
-        total.should.equal(lines.length - 1);
+        walker.got.should.equal(lines.length - 11);
         done();
       }, 100);
     });
