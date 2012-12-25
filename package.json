@@ -18,7 +18,8 @@
   },
   "devDependencies": {
     "should": ">=0.4.2",
-    "mocha": ">=0.13.0"
+    "mocha": ">=0.13.0",
+    "jscover": ">=0.2.0"
   },
   "license": "MIT",
   "engines": { 
