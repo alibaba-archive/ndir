@@ -193,18 +193,16 @@ describe('ndir', function () {
 
   describe('createBigFileWalker', function () {
     var walker;
-    it('should emit inited', function (done) {
+    it('should emit readable', function (done) {
       walker = dir.createBigFileWalker(logfile, {
         offset: 10,
-        pieceLength: 100
+        piece: 100
       });
       walker.pause.should.be.not.ok;
-      walker.inited.should.be.not.ok;
-      walker.once('inited', function () {
+      walker.once('readable', function () {
         walker.curr.length.should.equal(100);
         walker.back.length.should.equal(100);
         walker.pause.should.be.ok;
-        walker.inited.should.be.ok;
         done();
       });
     });
