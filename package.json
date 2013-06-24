@@ -11,12 +11,18 @@
     "url": "git://github.com/fengmk2/ndir.git"
   },
   "scripts": {
-    "test": "make test"
+    "test": "make test-all",
+    "blanket": { "pattern": "ndir/lib" },
+    "travis-cov": { "threshold": 93 }
   },
   "dependencies": {
     
   },
   "devDependencies": {
+    "blanket": "*",
+    "travis-cov": "*",
+    "coveralls": "*",
+    "mocha-lcov-reporter": "*",
     "should": ">=0.4.2",
     "mocha": ">=0.13.0"
   },

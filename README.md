@@ -1,10 +1,8 @@
-# ndir [![Build Status](https://secure.travis-ci.org/fengmk2/ndir.png)](http://travis-ci.org/fengmk2/ndir)
+# ndir [![Build Status](https://secure.travis-ci.org/fengmk2/ndir.png)](http://travis-ci.org/fengmk2/ndir) [![Coverage Status](https://coveralls.io/repos/fengmk2/ndir/badge.png)](https://coveralls.io/r/fengmk2/ndir)
 
 ![logo](https://raw.github.com/fengmk2/ndir/master/logo.png)
 
 The lost dir util tools. Handle dir and file in Event.
-
-jscoverage: [93%](http://fengmk2.github.com/coverage/ndir.html)
 
 ## Install
 
@@ -136,7 +134,7 @@ $ make test
 
 (The MIT License)
 
-Copyright (c) 2011-2012 fengmk2 &lt;fengmk2@gmail.com&gt;
+Copyright (c) 2011-2013 fengmk2 &lt;fengmk2@gmail.com&gt;
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
