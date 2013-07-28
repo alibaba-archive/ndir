@@ -57,7 +57,9 @@ describe('ndir', function () {
       });
       walker.on('end', function () {
         dirCount.should.equal(2);
-        fileCount.should.equal(4);
+        //I write a log here ,so i change equal(5)
+        //fileCount.should.equal(4);
+        fileCount.should.equal(5);
         done();
       });
     });
@@ -187,6 +189,22 @@ describe('ndir', function () {
         }
       })
       .on('end', done)
+      .on('error', done);
+    });
+  });
+
+  describe('createLineReader()',function(){
+    it('should read all content,and the last line has no wrap',function(done) {
+      var logfile = __dirname + '/test_line.log';
+      var content = fs.readFileSync(logfile, 'utf8');
+      var data = [];
+      dir.createLineReader(logfile)
+      .on('line', function (line) {
+        data.push(line.toString());
+      })
+      .on('end', function(){
+        data.join("\n").length.should.equal(content.length);
+      })
       .on('error', done);
     });
   });
