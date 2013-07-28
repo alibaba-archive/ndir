@@ -176,7 +176,7 @@ describe('ndir', function () {
 
   describe('createLineReader()', function () {
     it('should read line by line', function (done) {
-      var logfile = __dirname + '/test_line.log';
+      var logfile = __dirname + '/access.log';
       var lines = fs.readFileSync(logfile, 'utf8').split('\n');
       var index = 0;
       dir.createLineReader(logfile)
